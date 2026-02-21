@@ -1,5 +1,6 @@
 :root {
   --sidebar-width: 320px;
+  --sidebar-collapsed-width: 80px;
   --panel-bg: #ffffff;
   --preview-bg: #f0f2f5;
   --accent-color: #4a6741;
@@ -24,6 +25,7 @@ body {
 .app-shell {
   display: flex;
   height: 100vh;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .control-row {
@@ -46,9 +48,29 @@ body {
 }
 
 input[type="color"] {
-  height: 42px;
+  height: 48px;
+  width: 100%;
   padding: 4px;
   cursor: pointer;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  background: #fdfdfd;
+}
+
+.color-custom-row {
+  display: flex;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.control-group.mini {
+  flex: 1;
+  text-align: center;
+}
+
+.control-group.mini label {
+  font-size: 10px;
+  margin-bottom: 4px;
 }
 
 /* Sidebar Styling */
@@ -62,6 +84,60 @@ input[type="color"] {
   gap: 32px;
   z-index: 10;
   box-shadow: 4px 0 15px rgba(0, 0, 0, 0.03);
+  transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1), padding 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow-x: hidden;
+}
+
+.sidebar.collapsed {
+  width: var(--sidebar-collapsed-width);
+  padding: 32px 10px;
+}
+
+.sidebar.collapsed .header-main,
+.sidebar.collapsed .control-group:not(.toggle-wrapper),
+.sidebar.collapsed .divider,
+.sidebar.collapsed .sidebar-footer {
+  display: none;
+}
+
+.sidebar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.toggle-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  width: 32px;
+  height: 32px;
+  justify-content: center;
+  align-items: center;
+  border-radius: 6px;
+  transition: background-color 0.2s;
+}
+
+.toggle-btn:hover {
+  background-color: #f5f5f5;
+}
+
+.toggle-btn span {
+  display: block;
+  width: 18px;
+  height: 2px;
+  background-color: var(--text-primary);
+  border-radius: 1px;
+  transition: all 0.3s;
+}
+
+.sidebar.collapsed .toggle-btn span:nth-child(2) {
+  width: 12px;
 }
 
 .sidebar-header h1 {

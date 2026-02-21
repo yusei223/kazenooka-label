@@ -23,8 +23,15 @@
   <div class="app-shell">
     <aside class="sidebar">
       <div class="sidebar-header">
-        <h1>風の丘</h1>
-        <p>Label Studio</p>
+        <div class="header-main">
+          <h1>風の丘</h1>
+          <p>Label Studio</p>
+        </div>
+        <button id="sidebarToggle" class="toggle-btn" aria-label="Toggle Sidebar">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
       </div>
 
       <div class="control-group">
@@ -46,25 +53,19 @@
         </select>
       </div>
 
-      <div class="divider">カスタマイズ</div>
+      <div class="divider">カラーカスタマイズ</div>
 
-      <div class="control-group">
-        <label>会社名</label>
-        <div class="control-row">
+      <div class="color-custom-row">
+        <div class="control-group mini">
+          <label>会社</label>
           <input type="color" id="companyColor" value="#4a6741">
         </div>
-      </div>
-
-      <div class="control-group">
-        <label>商品名</label>
-        <div class="control-row">
+        <div class="control-group mini">
+          <label>商品</label>
           <input type="color" id="productColor" value="#1a1a1a">
         </div>
-      </div>
-
-      <div class="control-group">
-        <label>説明文（下部）</label>
-        <div class="control-row">
+        <div class="control-group mini">
+          <label>説明</label>
           <input type="color" id="footerColor" value="#2c2c2c">
         </div>
       </div>

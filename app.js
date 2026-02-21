@@ -16,6 +16,13 @@ const companyColor = document.getElementById("companyColor");
 const productColor = document.getElementById("productColor");
 const footerColor = document.getElementById("footerColor");
 
+const sidebarToggle = document.getElementById("sidebarToggle");
+const sidebar = document.querySelector(".sidebar");
+
+sidebarToggle.addEventListener("click", () => {
+  sidebar.classList.toggle("collapsed");
+});
+
 const resetBtn = document.getElementById("resetBtn");
 
 // 入力 → ラベル反映
