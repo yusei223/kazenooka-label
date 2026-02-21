@@ -1,0 +1,51 @@
+/* Natural Theme - theme-e.css */
+:root {
+    --primary-bg: #f2ede4;
+    --accent-green: #5d7a54;
+    --gold-accent: #a68b6a;
+    --text-dark: #4a3e31;
+}
+
+.label-container {
+    background-color: var(--primary-bg);
+}
+
+.label-border {
+    border: 2px dashed var(--gold-accent);
+}
+
+.company-name {
+    color: var(--accent-green);
+    font-weight: 500;
+}
+
+.tagline {
+    color: var(--text-dark);
+    opacity: 0.8;
+}
+
+.cow-image-container {
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    background: #fff;
+}
+
+.product-name {
+    color: var(--text-dark);
+    font-weight: 500;
+    background: rgba(93, 122, 84, 0.1);
+    padding: 4px 20px;
+    border-radius: 20px;
+}
+
+.cow-name-tag {
+    color: var(--accent-green);
+}
+
+.cow-name-tag::before,
+.cow-name-tag::after {
+    background-color: var(--gold-accent);
+    border-radius: 50%;
+    width: 6px;
+    height: 6px;
+}

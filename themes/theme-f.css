@@ -1,0 +1,58 @@
+/* Vintage Theme - theme-f.css */
+:root {
+    --primary-bg: #e6d5b8;
+    --accent-green: #3d3d3d;
+    --gold-accent: #8b5e3c;
+    --text-dark: #2b2b2b;
+}
+
+.label-container {
+    background-color: var(--primary-bg);
+    background-image: radial-gradient(circle, rgba(0, 0, 0, 0.02) 1px, transparent 1px);
+    background-size: 20px 20px;
+}
+
+.label-border {
+    border: 2px double var(--gold-accent);
+    outline: 1px solid var(--gold-accent);
+}
+
+.company-name {
+    font-family: 'Noto Serif JP', serif;
+    color: var(--gold-accent);
+    text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.1);
+}
+
+.tagline {
+    color: var(--text-dark);
+    text-transform: uppercase;
+    font-weight: 700;
+    letter-spacing: 0.3em;
+    font-size: 10px;
+}
+
+.cow-image-container {
+    filter: sepia(0.5) contrast(1.1);
+    border: 2px solid var(--gold-accent);
+    border-radius: 0;
+}
+
+.product-name {
+    font-family: 'Noto Serif JP', serif;
+    color: var(--accent-green);
+    text-decoration: underline double var(--gold-accent);
+}
+
+.cow-name-tag {
+    color: var(--gold-accent);
+    font-style: italic;
+}
+
+.cow-name-tag::before,
+.cow-name-tag::after {
+    content: "❧";
+    background: none;
+    width: auto;
+    height: auto;
+    color: var(--gold-accent);
+}

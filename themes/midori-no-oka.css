@@ -1,0 +1,57 @@
+/* Midori no Oka Theme */
+:root {
+    --hill-green: #e8f5e9;
+    --hill-accent: #66bb6a;
+    --text-earth: #2e7d32;
+}
+
+.label-container {
+    background-color: #fff;
+    background-image:
+        radial-gradient(ellipse at 50% 120%, var(--hill-green) 0%, var(--hill-green) 70%, transparent 71%);
+    box-shadow: 0 10px 40px rgba(74, 103, 65, 0.15);
+}
+
+.label-border {
+    border: 1px solid rgba(74, 103, 65, 0.2);
+}
+
+.company-name {
+    color: var(--text-earth);
+    font-family: 'Noto Serif JP', serif;
+}
+
+.tagline {
+    color: var(--text-earth);
+    opacity: 0.7;
+}
+
+.cow-image-container {
+    border: 4px solid var(--hill-green);
+    z-index: 2;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
+}
+
+.product-name {
+    color: var(--text-earth);
+    border-bottom: 2px solid var(--hill-accent);
+    padding-bottom: 5px;
+}
+
+.cow-name-tag {
+    color: var(--text-earth);
+    font-weight: 500;
+}
+
+.cow-name-tag::before,
+.cow-name-tag::after {
+    background-color: var(--hill-accent);
+    width: 15px;
+    height: 15px;
+    border-radius: 50% 50% 0 0;
+    /* Tiny hill shape */
+}
+
+.footer-tag {
+    color: var(--text-earth);
+}

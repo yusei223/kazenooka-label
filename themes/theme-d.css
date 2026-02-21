@@ -1,0 +1,57 @@
+/* Elegant Theme - theme-d.css */
+:root {
+  --primary-bg: #fffdfa;
+  --accent-green: #0a4d3c;
+  /* Deep Emerald */
+  --gold-accent: #b08d57;
+  --text-dark: #1a1a1a;
+}
+
+.label-container {
+  background-color: var(--primary-bg);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.12);
+}
+
+.label-border {
+  border: 2px double var(--gold-accent);
+}
+
+.company-name {
+  font-family: 'Noto Serif JP', serif;
+  color: var(--accent-green);
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+
+.tagline {
+  color: var(--gold-accent);
+  font-style: italic;
+}
+
+.cow-image-container {
+  border: 1px solid var(--gold-accent);
+  padding: 5px;
+  background: white;
+  border-radius: 4px;
+  /* Square with slight roundness */
+}
+
+.product-name {
+  font-family: 'Noto Serif JP', serif;
+  color: var(--text-dark);
+  border-bottom: 1px solid var(--gold-accent);
+  display: inline-block;
+  padding-bottom: 4px;
+}
+
+.cow-name-tag {
+  color: var(--accent-green);
+  font-family: 'Noto Serif JP', serif;
+}
+
+.cow-name-tag::before,
+.cow-name-tag::after {
+  background-color: var(--gold-accent);
+  width: 30px;
+}

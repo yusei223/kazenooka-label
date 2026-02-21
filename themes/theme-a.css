@@ -1,0 +1,13 @@
+.label-border{ border:1px solid var(--gold-accent); }
+
+.company-name{ color:var(--accent-green); }
+.tagline{ color:var(--text-dark); }
+
+.product-name{
+  color:var(--text-dark);
+  background: linear-gradient(90deg, var(--text-dark), var(--accent-green));
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+}
+
+.cow-name-tag{ color:var(--accent-green); }

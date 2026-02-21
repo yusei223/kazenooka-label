@@ -1,0 +1,21 @@
+:root{
+    --primary-bg:#fbfaf7;
+    --accent-green:#2f6b3a;
+    --gold-accent:#b98b3a;
+  }
+  
+  .label-border{ border:2px solid rgba(185,139,58,0.65); }
+  
+  .company-name{ color:var(--accent-green); }
+  .tagline{ color:rgba(44,44,44,0.7); }
+  
+  .product-name{
+    display:inline-block;
+    padding:6px 16px;
+    border-radius:14px;
+    background: rgba(47,107,58,0.12);  /* うっすら緑の帯 */
+    color: var(--accent-green);
+    -webkit-text-fill-color:initial;    /* 透明化しない */
+  }
+  
+  .cow-name-tag{ color:var(--accent-green); font-weight:700; }
