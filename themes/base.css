@@ -372,3 +372,13 @@ input[type="color"] {
   background: none !important;
   color: #2c2c2c !important;
 }
+
+/* 円形ラベル用のキャプチャスタイル */
+.label-container.circular-export {
+  border-radius: 50% !important;
+  overflow: hidden !important;
+}
+
+.label-container.circular-export .label-border {
+  border-radius: 50% !important;
+}

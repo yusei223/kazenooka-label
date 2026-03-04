@@ -71,9 +71,13 @@
       </div>
 
       <div class="control-group">
-        <label class="checkbox-label">
-          <input type="checkbox" id="tiledMode"> A4用紙に並べる (複数枚)
-        </label>
+        <label for="printMode">印刷レイアウト</label>
+        <select id="printMode">
+          <option value="single">ラベル単体 (プレビューと同じ)</option>
+          <option value="a4_10">A4 - 10面 (2列×5行)</option>
+          <option value="a4_40">A4 - 40面 (4列×10行) ぱんだ良品</option>
+          <option value="a4_24_circle">A4 - 24面 (4列×6行) 丸型 40mm</option>
+        </select>
       </div>
 
       <div class="sidebar-footer">

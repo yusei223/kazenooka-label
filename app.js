@@ -137,7 +137,7 @@ themeSelect.addEventListener("change", () => {
 });
 
 // PDF書き出し
-const tiledMode = document.getElementById("tiledMode");
+const printMode = document.getElementById("printMode");
 
 pdfBtn.addEventListener("click", async () => {
   pdfBtn.disabled = true;
@@ -152,6 +152,14 @@ pdfBtn.addEventListener("click", async () => {
 
     label.classList.add("exporting");
 
+    const selectedMode = printMode.value;
+    const isCircleExport = selectedMode === "a4_24_circle";
+
+    // 円形モードの場合、一時的に円形スタイルを適用
+    if (isCircleExport) {
+      label.classList.add("circular-export");
+    }
+
     const w = 500;
     const h = 500;
 
@@ -163,11 +171,38 @@ pdfBtn.addEventListener("click", async () => {
       height: h
     });
 
+    // 円形モードの解除（キャプチャ後）
+    if (isCircleExport) {
+      label.classList.remove("circular-export");
+    }
+
     const imgData = canvas.toDataURL("image/png");
     const { jsPDF } = window.jspdf;
 
-    if (tiledMode.checked) {
-      // A4用紙に並べる [210mm x 297mm]
+    if (selectedMode !== "single") {
+      // PDF設定の定義
+      const layouts = {
+        "a4_10": {
+          cols: 2,
+          rows: 5,
+          margin: 10,
+          filenameSuffix: "A4_10pcs"
+        },
+        "a4_40": {
+          cols: 4,
+          rows: 10,
+          margin: 0,
+          filenameSuffix: "A4_40pcs_Panda"
+        },
+        "a4_24_circle": {
+          cols: 4,
+          rows: 6,
+          margin: 10,
+          filenameSuffix: "A4_24pcs_Circle"
+        }
+      };
+
+      const config = layouts[selectedMode];
       const pdf = new jsPDF({
         orientation: "portrait",
         unit: "mm",
@@ -176,40 +211,33 @@ pdfBtn.addEventListener("click", async () => {
 
       const a4W = 210;
       const a4H = 297;
-      const margin = 10; // mm
+      const margin = config.margin;
       const availableW = a4W - margin * 2;
       const availableH = a4H - margin * 2;
 
-      const cols = 2;
-      const rows = 5;
+      const cellW = availableW / config.cols;
+      const cellH = availableH / config.rows;
 
-      const cellW = availableW / cols;
-      const cellH = availableH / rows;
-
-      // ラベルのアスペクト比を維持してセルに収まるようにスケール計算
       const labelAspect = w / h;
       let drawW, drawH;
 
       if (labelAspect > cellW / cellH) {
-        // 横幅基準で合わせる
-        drawW = cellW * 0.95; // 少しマージンを持たせる
+        drawW = cellW * 0.98;
         drawH = drawW / labelAspect;
       } else {
-        // 高さ基準で合わせる
-        drawH = cellH * 0.95;
+        drawH = cellH * 0.98;
         drawW = drawH * labelAspect;
       }
 
-      for (let r = 0; r < rows; r++) {
-        for (let c = 0; c < cols; c++) {
-          // 各セルの中央に配置
+      for (let r = 0; r < config.rows; r++) {
+        for (let c = 0; c < config.cols; c++) {
           const x = margin + c * cellW + (cellW - drawW) / 2;
           const y = margin + r * cellH + (cellH - drawH) / 2;
           pdf.addImage(imgData, "PNG", x, y, drawW, drawH);
         }
       }
       const safeName = (productInput.value.trim() || "labels").replace(/[\\\/:*?"<>|]/g, "_");
-      pdf.save(`風の丘_${safeName}_A4_10pcs.pdf`);
+      pdf.save(`風の丘_${safeName}_${config.filenameSuffix}.pdf`);
     } else {
       // 単体保存
       const pdf = new jsPDF({
@@ -226,6 +254,7 @@ pdfBtn.addEventListener("click", async () => {
     alert("PDF出力に失敗しました。");
   } finally {
     label.classList.remove("exporting");
+    label.classList.remove("circular-export");
     pdfBtn.disabled = false;
   }
 });
