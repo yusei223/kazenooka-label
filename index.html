@@ -34,39 +34,76 @@
         </button>
       </div>
 
-      <div class="control-group">
-        <label for="productInput">商品名</label>
-        <input id="productInput" type="text" value="手作りキャラメル" maxlength="20" placeholder="商品名を入力..." />
+      <div class="tab-nav">
+        <button class="tab-btn active" data-tab="product">デザイン</button>
+        <button class="tab-btn" data-tab="food1">食品ラベル1</button>
+        <button class="tab-btn" data-tab="food2">食品ラベル2</button>
       </div>
 
+      <div id="productTab" class="tab-content active">
+        <div class="control-group">
+          <label for="productInput">商品名</label>
+          <input id="productInput" type="text" value="手作りキャラメル" maxlength="20" placeholder="商品名を入力..." />
+        </div>
 
+        <div class="control-group">
+          <label for="themeSelect">デザインテーマ</label>
+          <select id="themeSelect">
+            <option value="soyokaze">そよ風 (Soyokaze)</option>
+            <option value="midori-no-oka">緑の丘 (Midori no Oka)</option>
+            <option value="premium-sky">プレミアム・スカイ</option>
+            <option value="theme-a">クラシック A</option>
+            <option value="theme-b">モダン B</option>
+            <option value="theme-c">ポップ C</option>
+          </select>
+        </div>
 
-      <div class="control-group">
-        <label for="themeSelect">デザインテーマ</label>
-        <select id="themeSelect">
-          <option value="soyokaze">そよ風 (Soyokaze)</option>
-          <option value="midori-no-oka">緑の丘 (Midori no Oka)</option>
-          <option value="premium-sky">プレミアム・スカイ</option>
-          <option value="theme-a">クラシック A</option>
-          <option value="theme-b">モダン B</option>
-          <option value="theme-c">ポップ C</option>
-        </select>
+        <div class="divider">カラーカスタマイズ</div>
+
+        <div class="color-custom-row">
+          <div class="control-group mini">
+            <label>会社</label>
+            <input type="color" id="companyColor" value="#4a6741">
+          </div>
+          <div class="control-group mini">
+            <label>商品</label>
+            <input type="color" id="productColor" value="#1a1a1a">
+          </div>
+          <div class="control-group mini">
+            <label>説明</label>
+            <input type="color" id="footerColor" value="#2c2c2c">
+          </div>
+        </div>
       </div>
 
-      <div class="divider">カラーカスタマイズ</div>
+      <div id="food1Tab" class="tab-content">
+        <div class="control-group">
+          <label for="foodNameInput">品名</label>
+          <input id="foodNameInput" type="text" value="クリーミーバター(100g)" placeholder="品名を入力..." />
+        </div>
+        <div class="control-group">
+          <label for="ingredientsInput">原材料名</label>
+          <textarea id="ingredientsInput" rows="3" placeholder="原材料名を入力...">牛乳、塩</textarea>
+        </div>
+        <div class="control-group">
+          <label for="expiryInput">賞味期限</label>
+          <input id="expiryInput" type="text" value="" placeholder="枠外右側に記載 など" />
+        </div>
+      </div>
 
-      <div class="color-custom-row">
-        <div class="control-group mini">
-          <label>会社</label>
-          <input type="color" id="companyColor" value="#4a6741">
+      <div id="food2Tab" class="tab-content">
+        <div class="control-group">
+          <label for="additiveInput">添加物</label>
+          <input id="additiveInput" type="text" value="無添加" placeholder="添加物を入力..." />
         </div>
-        <div class="control-group mini">
-          <label>商品</label>
-          <input type="color" id="productColor" value="#1a1a1a">
+        <div class="control-group">
+          <label for="storageInput">保存方法</label>
+          <input id="storageInput" type="text" value="要冷凍（10℃以下）" placeholder="保存方法を入力..." />
         </div>
-        <div class="control-group mini">
-          <label>説明</label>
-          <input type="color" id="footerColor" value="#2c2c2c">
+        <div class="control-group">
+          <label for="manufacturerInput">製造者</label>
+          <textarea id="manufacturerInput" rows="2" placeholder="製造者を入力...">風の丘
+玉名市中坂門出883</textarea>
         </div>
       </div>
 
@@ -87,7 +124,7 @@
     </aside>
 
     <main class="preview-area">
-      <div class="label-container" id="label">
+      <div class="label-container active" id="label">
         <div class="label-border"></div>
 
         <div class="header">
@@ -105,6 +142,40 @@
         </div>
 
         <div class="footer-tag">ゆっくり、ぼんやり</div>
+      </div>
+
+      <div class="label-container" id="foodLabel1">
+        <table class="food-label-table">
+          <tr>
+            <th>品名</th>
+            <td id="previewFoodName">クリーミーバター(100g)</td>
+          </tr>
+          <tr>
+            <th>原材料名</th>
+            <td id="previewIngredients">牛乳、塩</td>
+          </tr>
+          <tr>
+            <th>賞味期限</th>
+            <td id="previewExpiry"></td>
+          </tr>
+        </table>
+      </div>
+
+      <div class="label-container" id="foodLabel2">
+        <table class="food-label-table">
+          <tr>
+            <th>添加物</th>
+            <td id="previewAdditive">無添加</td>
+          </tr>
+          <tr>
+            <th>保存方法</th>
+            <td id="previewStorage">要冷凍（10℃以下）</td>
+          </tr>
+          <tr>
+            <th>製造者</th>
+            <td id="previewManufacturer">風の丘<br>玉名市中坂門出883</td>
+          </tr>
+        </table>
       </div>
     </main>
   </div>

@@ -47,6 +47,44 @@ body {
   padding-bottom: 4px;
 }
 
+.tab-nav {
+  display: flex;
+  gap: 4px;
+  background: #f0f0f0;
+  padding: 4px;
+  border-radius: 10px;
+  margin-bottom: 8px;
+}
+
+.tab-btn {
+  flex: 1;
+  border: none;
+  background: none;
+  padding: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  cursor: pointer;
+  border-radius: 7px;
+  transition: all 0.2s;
+}
+
+.tab-btn.active {
+  background: white;
+  color: var(--accent-color);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+.tab-content {
+  display: none;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.tab-content.active {
+  display: flex;
+}
+
 input[type="color"] {
   height: 48px;
   width: 100%;
@@ -168,15 +206,19 @@ input[type="color"] {
 }
 
 .control-group input,
-.control-group select {
+.control-group select,
+.control-group textarea {
   padding: 12px;
   border: 1px solid var(--border-color);
   border-radius: 8px;
   font-size: 14px;
   transition: border-color 0.2s;
+  font-family: inherit;
+  resize: vertical;
 }
 
-.control-group input:focus {
+.control-group input:focus,
+.control-group textarea:focus {
   outline: none;
   border-color: var(--accent-color);
 }
@@ -262,7 +304,7 @@ input[type="color"] {
   border-radius: 40px;
   position: relative;
   overflow: hidden;
-  display: flex;
+  display: none;
   flex-direction: column;
   align-items: center;
   padding: 40px;
@@ -271,6 +313,10 @@ input[type="color"] {
   border: 2px solid rgba(0, 0, 0, 0.05);
   flex-shrink: 0;
   transition: width 0.3s, height 0.3s;
+}
+
+.label-container.active {
+  display: flex;
 }
 
 .label-border {
@@ -365,6 +411,53 @@ input[type="color"] {
   font-size: 13px;
   letter-spacing: .12em;
   color: rgba(44, 44, 44, .75);
+}
+
+/* Food Label Table Styles */
+.food-label-table {
+  width: 100%;
+  height: 100%;
+  border-collapse: collapse;
+  font-family: 'Noto Sans JP', sans-serif;
+  font-size: 22px;
+  /* Font size increased for better readability */
+  background: white;
+  border: 2px solid #000;
+}
+
+.food-label-table th,
+.food-label-table td {
+  border: 1px solid #000;
+  padding: 16px 20px;
+  /* Increased padding */
+  text-align: left;
+  vertical-align: middle;
+  /* Center vertically for better look with 3 rows */
+  line-height: 1.4;
+}
+
+.food-label-table th {
+  width: 30%;
+  white-space: nowrap;
+  font-weight: 700;
+  background: #fdfdfd;
+}
+
+.food-label-table td {
+  word-break: break-all;
+  white-space: pre-wrap;
+}
+
+#foodLabel1,
+#foodLabel2 {
+  background-color: white;
+  padding: 20px;
+  border-radius: 0;
+}
+
+#foodLabel1 .label-border,
+#foodLabel2 .label-border {
+  display: none;
 }
 
 /* Data URL for Wind Overlay */

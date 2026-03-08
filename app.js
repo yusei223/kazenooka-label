@@ -4,12 +4,34 @@ const pdfBtn = document.getElementById("pdfBtn");
 const themeSelect = document.getElementById("themeSelect");
 const themeStylesheet = document.getElementById("themeStylesheet");
 const label = document.getElementById("label");
+const foodLabel1 = document.getElementById("foodLabel1");
+const foodLabel2 = document.getElementById("foodLabel2");
 const cowImg = document.getElementById("cowImg");
 const cowContainer = document.querySelector(".cow-image-container");
 
 const companyName = document.querySelector(".company-name");
 const tagline = document.querySelector(".tagline");
 const footerTag = document.querySelector(".footer-tag");
+
+// 食品ラベル1 入力要素
+const foodNameInput = document.getElementById("foodNameInput");
+const ingredientsInput = document.getElementById("ingredientsInput");
+const expiryInput = document.getElementById("expiryInput");
+
+// 食品ラベル2 入力要素
+const additiveInput = document.getElementById("additiveInput");
+const storageInput = document.getElementById("storageInput");
+const manufacturerInput = document.getElementById("manufacturerInput");
+
+// 食品ラベル1 単一反映用
+const previewFoodName = document.getElementById("previewFoodName");
+const previewIngredients = document.getElementById("previewIngredients");
+const previewExpiry = document.getElementById("previewExpiry");
+
+// 食品ラベル2 単一反映用
+const previewAdditive = document.getElementById("previewAdditive");
+const previewStorage = document.getElementById("previewStorage");
+const previewManufacturer = document.getElementById("previewManufacturer");
 
 // カスタマイズ用要素
 const companyColor = document.getElementById("companyColor");
@@ -25,9 +47,64 @@ sidebarToggle.addEventListener("click", () => {
 
 const resetBtn = document.getElementById("resetBtn");
 
-// 入力 → ラベル反映
+// タブ切り替え
+const tabBtns = document.querySelectorAll(".tab-btn");
+const tabContents = document.querySelectorAll(".tab-content");
+const previewLabels = [label, foodLabel1, foodLabel2];
+
+tabBtns.forEach(btn => {
+  btn.addEventListener("click", () => {
+    const targetTab = btn.dataset.tab;
+
+    // ボタンの切り替え
+    tabBtns.forEach(b => b.classList.remove("active"));
+    btn.classList.add("active");
+
+    // コンテンツの切り替え
+    tabContents.forEach(content => {
+      content.classList.remove("active");
+      if (content.id === `${targetTab}Tab`) {
+        content.classList.add("active");
+      }
+    });
+
+    // プレビューの切り替え
+    previewLabels.forEach(lbl => lbl.classList.remove("active"));
+    if (targetTab === "product") {
+      label.classList.add("active");
+    } else if (targetTab === "food1") {
+      foodLabel1.classList.add("active");
+    } else if (targetTab === "food2") {
+      foodLabel2.classList.add("active");
+    }
+  });
+});
+
+// デザイン更新
 productInput.addEventListener("input", () => {
   productName.textContent = productInput.value.trim() || " ";
+});
+
+// 食品ラベル1 更新
+const syncFoodLabel1 = () => {
+  previewFoodName.textContent = foodNameInput.value;
+  previewIngredients.textContent = ingredientsInput.value;
+  previewExpiry.textContent = expiryInput.value;
+};
+
+// 食品ラベル2 更新
+const syncFoodLabel2 = () => {
+  previewAdditive.textContent = additiveInput.value;
+  previewStorage.textContent = storageInput.value;
+  previewManufacturer.innerHTML = manufacturerInput.value.replace(/\n/g, "<br>");
+};
+
+[foodNameInput, ingredientsInput, expiryInput].forEach(input => {
+  input.addEventListener("input", syncFoodLabel1);
+});
+
+[additiveInput, storageInput, manufacturerInput].forEach(input => {
+  input.addEventListener("input", syncFoodLabel2);
 });
 
 // サイズ変更
@@ -36,66 +113,53 @@ const updateSize = () => {
   const h = 500;
   label.style.width = `${w}px`;
   label.style.height = `${h}px`;
+  foodLabel1.style.width = `${w}px`;
+  foodLabel1.style.height = `${h}px`;
+  foodLabel2.style.width = `${w}px`;
+  foodLabel2.style.height = `${h}px`;
 
   // 自動スキャリング
   const scaleBase = Math.min(w, h);
 
-  // もとのベース設計に基づく比率 (Step 422)
-  const newCompanySize = Math.round(scaleBase * 0.064); // 32/500
-  const newProductSize = Math.round(scaleBase * 0.064); // 32/500
-  const newFooterSize = Math.round(scaleBase * 0.026);  // 13/500
-
-  // 画像サイズの自動計算 (280/500 = 56%)
+  // もとのベース設計に基づく比率
   if (cowContainer) {
     const imgSize = Math.round(scaleBase * 0.56);
     cowContainer.style.width = `${imgSize}px`;
     cowContainer.style.height = `${imgSize}px`;
   }
 
-  // 余白・配置の自動計算 (Step 422ベース)
-  label.style.padding = `${Math.round(scaleBase * 0.08)}px`; // 40/500
-  label.style.borderRadius = `${Math.round(scaleBase * 0.08)}px`; // 40/500
+  label.style.padding = `${Math.round(scaleBase * 0.08)}px`;
+  label.style.borderRadius = `${Math.round(scaleBase * 0.08)}px`;
 
   const labelBorder = document.querySelector(".label-border");
   if (labelBorder) {
-    const pos = Math.round(scaleBase * 0.04); // 20/500
+    const pos = Math.round(scaleBase * 0.04);
     labelBorder.style.top = `${pos}px`;
     labelBorder.style.left = `${pos}px`;
     labelBorder.style.right = `${pos}px`;
     labelBorder.style.bottom = `${pos}px`;
-    labelBorder.style.borderRadius = `${Math.round(scaleBase * 0.06)}px`; // 30/500
-
+    labelBorder.style.borderRadius = `${Math.round(scaleBase * 0.06)}px`;
     labelBorder.style.borderWidth = `${Math.max(1, Math.round(scaleBase * 0.006))}px`;
   }
 
-  // 商品情報のマージン
   const productInfo = document.querySelector(".product-info");
   if (productInfo) {
-    productInfo.style.marginTop = `${Math.round(scaleBase * 0.03)}px`; // 15/500
+    productInfo.style.marginTop = `${Math.round(scaleBase * 0.03)}px`;
   }
 
-  // 最下部タグの絶対配置
   if (footerTag) {
-    footerTag.style.bottom = `${Math.round(scaleBase * 0.052)}px`; // 26/500
+    footerTag.style.bottom = `${Math.round(scaleBase * 0.052)}px`;
   }
 
-  // 即時適用
   applyTextCustomization();
 };
 
-// 初期サイズ設定 (イベントリスナーは不要になったため削除)
-// widthInput.addEventListener("input", updateSize);
-// heightInput.addEventListener("input", updateSize);
-
 // テキスト・画像カスタマイズ
 const applyTextCustomization = () => {
-  // 会社名
   companyName.style.color = companyColor.value;
   companyName.style.fontSize = `32px`;
-  // 商品名
   productName.style.color = productColor.value;
   productName.style.fontSize = `32px`;
-  // 説明文
   footerTag.style.color = footerColor.value;
   footerTag.style.fontSize = `13px`;
 
@@ -103,7 +167,6 @@ const applyTextCustomization = () => {
   tagline.style.fontSize = subFontSize;
   tagline.style.color = footerColor.value;
 
-  // 牛の名前タグのフォントサイズも調整
   const cowNameTag = document.querySelector(".cow-name-tag");
   if (cowNameTag) {
     cowNameTag.style.fontSize = subFontSize;
@@ -121,10 +184,19 @@ const resetAll = () => {
   productInput.value = "手作りキャラメル";
   productName.textContent = "手作りキャラメル";
 
-  companyColor.value = "#333333";
-  productColor.value = "#333333";
-  footerColor.value = "#666666";
+  companyColor.value = "#4a6741";
+  productColor.value = "#1a1a1a";
+  footerColor.value = "#2c2c2c";
 
+  foodNameInput.value = "クリーミーバター(100g)";
+  ingredientsInput.value = "牛乳、塩";
+  expiryInput.value = "";
+  additiveInput.value = "無添加";
+  storageInput.value = "要冷凍（10℃以下）";
+  manufacturerInput.value = "風の丘\n玉名市中坂門出883";
+
+  syncFoodLabel1();
+  syncFoodLabel2();
   updateSize();
 };
 
@@ -142,28 +214,32 @@ const printMode = document.getElementById("printMode");
 pdfBtn.addEventListener("click", async () => {
   pdfBtn.disabled = true;
 
+  // 現在アクティブなラベルを選択
+  const activeLabel = document.querySelector(".label-container.active");
+  const labelId = activeLabel.id;
+  const isFoodLabel = labelId === "foodLabel1" || labelId === "foodLabel2";
+
   try {
     if (document.fonts && document.fonts.ready) {
       await document.fonts.ready;
     }
-    if (cowImg && cowImg.decode) {
+    if (!isFoodLabel && cowImg && cowImg.decode) {
       try { await cowImg.decode(); } catch (_) { }
     }
 
-    label.classList.add("exporting");
+    activeLabel.classList.add("exporting");
 
     const selectedMode = printMode.value;
     const isCircleExport = selectedMode === "a4_24_circle";
 
-    // 円形モードの場合、一時的に円形スタイルを適用
     if (isCircleExport) {
-      label.classList.add("circular-export");
+      activeLabel.classList.add("circular-export");
     }
 
     const w = 500;
     const h = 500;
 
-    const canvas = await html2canvas(label, {
+    const canvas = await html2canvas(activeLabel, {
       scale: 3,
       backgroundColor: null,
       useCORS: true,
@@ -171,90 +247,89 @@ pdfBtn.addEventListener("click", async () => {
       height: h
     });
 
-    // 円形モードの解除（キャプチャ後）
     if (isCircleExport) {
-      label.classList.remove("circular-export");
+      activeLabel.classList.remove("circular-export");
     }
 
     const imgData = canvas.toDataURL("image/png");
     const { jsPDF } = window.jspdf;
 
     if (selectedMode !== "single") {
-      // PDF設定の定義
       const layouts = {
-        "a4_10": {
-          cols: 2,
-          rows: 5,
-          margin: 10,
-          filenameSuffix: "A4_10pcs"
-        },
-        "a4_40": {
-          cols: 4,
-          rows: 10,
-          margin: 0,
-          filenameSuffix: "A4_40pcs_Panda"
-        },
+        "a4_10": { cols: 2, rows: 5, margin: 10, suffix: "A4_10pcs" },
+        "a4_40": { cols: 4, rows: 10, margin: 0, suffix: "A4_40pcs_Panda" },
         "a4_24_circle": {
           cols: 4,
           rows: 6,
-          margin: 10,
-          filenameSuffix: "A4_24pcs_Circle"
+          topMargin: 13.5,
+          leftMargin: 16.0,
+          hPitch: 46.0,
+          vPitch: 46.0,
+          drawSize: 40.0,
+          suffix: "A4_24pcs_Circle"
         }
       };
 
       const config = layouts[selectedMode];
-      const pdf = new jsPDF({
-        orientation: "portrait",
-        unit: "mm",
-        format: "a4",
-      });
+      const pdf = new jsPDF({ orientation: "portrait", unit: "mm", format: "a4" });
 
-      const a4W = 210;
-      const a4H = 297;
-      const margin = config.margin;
-      const availableW = a4W - margin * 2;
-      const availableH = a4H - margin * 2;
-
-      const cellW = availableW / config.cols;
-      const cellH = availableH / config.rows;
-
-      const labelAspect = w / h;
-      let drawW, drawH;
-
-      if (labelAspect > cellW / cellH) {
-        drawW = cellW * 0.98;
-        drawH = drawW / labelAspect;
-      } else {
-        drawH = cellH * 0.98;
-        drawW = drawH * labelAspect;
-      }
+      const isAveryCircle = selectedMode === "a4_24_circle";
 
       for (let r = 0; r < config.rows; r++) {
         for (let c = 0; c < config.cols; c++) {
-          const x = margin + c * cellW + (cellW - drawW) / 2;
-          const y = margin + r * cellH + (cellH - drawH) / 2;
+          let x, y, drawW, drawH;
+
+          if (isAveryCircle) {
+            // 精密レイアウト（ミリ単位）
+            x = config.leftMargin + (c * config.hPitch);
+            y = config.topMargin + (r * config.vPitch);
+            drawW = config.drawSize;
+            drawH = config.drawSize;
+          } else {
+            // 自動算出レイアウト（10面, 40面）
+            const margin = config.margin;
+            const availableW = 210 - margin * 2;
+            const availableH = 297 - margin * 2;
+            const cellW = availableW / config.cols;
+            const cellH = availableH / config.rows;
+            const labelAspect = w / h;
+
+            if (labelAspect > cellW / cellH) {
+              drawW = cellW * 0.98;
+              drawH = drawW / labelAspect;
+            } else {
+              drawH = cellH * 0.98;
+              drawW = drawH * labelAspect;
+            }
+            x = margin + c * cellW + (cellW - drawW) / 2;
+            y = margin + r * cellH + (cellH - drawH) / 2;
+          }
+
           pdf.addImage(imgData, "PNG", x, y, drawW, drawH);
         }
       }
-      const safeName = (productInput.value.trim() || "labels").replace(/[\\\/:*?"<>|]/g, "_");
-      pdf.save(`風の丘_${safeName}_${config.filenameSuffix}.pdf`);
+
+      let labelName = labelId === "foodLabel1" ? foodNameInput.value : (labelId === "foodLabel2" ? "食品ラベル2" : productInput.value);
+      const safeName = (labelName.trim() || "labels").replace(/[\\\/:*?"<>|]/g, "_");
+      pdf.save(`風の丘_${safeName}_${config.suffix}.pdf`);
     } else {
-      // 単体保存
-      const pdf = new jsPDF({
-        orientation: w > h ? "landscape" : "portrait",
-        unit: "px",
-        format: [w, h],
-      });
+      const pdf = new jsPDF({ orientation: w > h ? "landscape" : "portrait", unit: "px", format: [w, h] });
       pdf.addImage(imgData, "PNG", 0, 0, w, h);
-      const safeName = (productInput.value.trim() || "label").replace(/[\\\/:*?"<>|]/g, "_");
+
+      let labelName = labelId === "foodLabel1" ? foodNameInput.value : (labelId === "foodLabel2" ? "食品ラベル2" : productInput.value);
+      const safeName = (labelName.trim() || "label").replace(/[\\\/:*?"<>|]/g, "_");
       pdf.save(`風の丘_${safeName}.pdf`);
     }
   } catch (e) {
     console.error(e);
     alert("PDF出力に失敗しました。");
   } finally {
-    label.classList.remove("exporting");
-    label.classList.remove("circular-export");
+    activeLabel.classList.remove("exporting");
+    activeLabel.classList.remove("circular-export");
     pdfBtn.disabled = false;
   }
 });
+
+updateSize();
+syncFoodLabel1();
+syncFoodLabel2();
