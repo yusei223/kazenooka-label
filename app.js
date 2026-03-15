@@ -111,12 +111,14 @@ const syncFoodLabel2 = () => {
 const updateSize = () => {
   const w = 500;
   const h = 500;
+  const foodW = 525;
+  const foodH = 297;
   label.style.width = `${w}px`;
   label.style.height = `${h}px`;
-  foodLabel1.style.width = `${w}px`;
-  foodLabel1.style.height = `${h}px`;
-  foodLabel2.style.width = `${w}px`;
-  foodLabel2.style.height = `${h}px`;
+  foodLabel1.style.width = `${foodW}px`;
+  foodLabel1.style.height = `${foodH}px`;
+  foodLabel2.style.width = `${foodW}px`;
+  foodLabel2.style.height = `${foodH}px`;
 
   // 自動スキャリング
   const scaleBase = Math.min(w, h);
@@ -236,8 +238,9 @@ pdfBtn.addEventListener("click", async () => {
       activeLabel.classList.add("circular-export");
     }
 
-    const w = 500;
-    const h = 500;
+    const isFoodLabelExport = labelId === "foodLabel1" || labelId === "foodLabel2";
+    const w = isFoodLabelExport ? 525 : 500;
+    const h = isFoodLabelExport ? 297 : 500;
 
     const canvas = await html2canvas(activeLabel, {
       scale: 3,
@@ -294,15 +297,22 @@ pdfBtn.addEventListener("click", async () => {
             const cellH = availableH / config.rows;
             const labelAspect = w / h;
 
-            if (labelAspect > cellW / cellH) {
-              drawW = cellW * 0.98;
-              drawH = drawW / labelAspect;
+            if (selectedMode === "a4_40") {
+              drawW = 52.5;
+              drawH = 29.7;
+              x = margin + c * cellW;
+              y = margin + r * cellH;
             } else {
-              drawH = cellH * 0.98;
-              drawW = drawH * labelAspect;
+              if (labelAspect > cellW / cellH) {
+                drawW = cellW * 0.98;
+                drawH = drawW / labelAspect;
+              } else {
+                drawH = cellH * 0.98;
+                drawW = drawH * labelAspect;
+              }
+              x = margin + c * cellW + (cellW - drawW) / 2;
+              y = margin + r * cellH + (cellH - drawH) / 2;
             }
-            x = margin + c * cellW + (cellW - drawW) / 2;
-            y = margin + r * cellH + (cellH - drawH) / 2;
           }
 
           pdf.addImage(imgData, "PNG", x, y, drawW, drawH);
