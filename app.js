@@ -298,10 +298,11 @@ pdfBtn.addEventListener("click", async () => {
             const labelAspect = w / h;
 
             if (selectedMode === "a4_40") {
-              drawW = 52.5;
-              drawH = 29.7;
-              x = margin + c * cellW;
-              y = margin + r * cellH;
+              const scale = 0.92; // 8%縮小して余白を作成
+              drawW = 52.5 * scale;
+              drawH = 29.7 * scale;
+              x = margin + c * cellW + (cellW - drawW) / 2;
+              y = margin + r * cellH + (cellH - drawH) / 2;
             } else {
               if (labelAspect > cellW / cellH) {
                 drawW = cellW * 0.98;
